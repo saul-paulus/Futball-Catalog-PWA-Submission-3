@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Primier League Football</title>
+    <meta name="description" content="PL-PWA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./assets/css/materialize.min.css" />
+    <link rel="stylesheet" href="./assets/css/materialize-icon.css" />
+    <link rel="stylesheet" href="./assets/css/customizeStyle.css" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="apple-touch-icon" href="./assets/images/icons/icon-72x72.png" />
+    <meta name="theme-color" content="#edf2f6" />
+    <!-- Favico -->
+    <link
+      rel="shortcut icon"
+      href="./assets/images/icons/favicon.ico"
+      type="image/x-icon"
+    />
+    <link
+      rel="icon"
+      href="./assets/images/icons/favicon.ico"
+      type="image/x-icon"
+    />
+    <!-- Akhir favico -->
+  </head>
+
+  <body>
+    <!-- Navigasi -->
+    <nav class="light-blue lighten-5" role="navigation">
+      <div class="nav-wrapper container">
+        <a href="#" class="brand-logo" id="logo-container"
+          ><img src="./assets/images/logo/brandPL.png" alt="logo league-primer"
+        /></a>
+        <a href="#" class="sidenav-trigger" data-target="nav-mobile">
+          <i class="material-icons">menu</i></a
+        >
+
+        <ul class="topnav right hide-on-med-and-down"></ul>
+        <ul class="sidenav" id="nav-mobile"></ul>
+      </div>
+    </nav>
+    <!-- Akhir Navigasi -->
+
+    <!-- Memuat content -->
+    <div class="container" id="body-content"></div>
+
+    <!-- Membuat footer -->
+    <footer class="page-footer light-blue lighten-3 fixed-botom">
+      <div class="footer-copyright">
+        <div class="container">
+          <p>© 2020 Copyright saulPaulus</p>
+        </div>
+      </div>
+    </footer>
+    <!-- Akhir membuat footer -->
+
+    <!-- JavaScript -->
+    <script src="./assets/js/materialize.min.js"></script>
+    <script src="./assets/components/nav.js" type="module"></script>
+    <script src="./assets/js/idb.js"></script>
+    <script src="./assets/js/db.js"></script>
+    <script src="./assets/js/index.js" type="module"></script>
+  </body>
+</html>
