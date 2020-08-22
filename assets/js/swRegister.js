@@ -1,7 +1,7 @@
 // REGISTER SERVICE WORKER
 const registerServiceWorker = () => {
   return navigator.serviceWorker
-    .register("./serviceWorker.js")
+    .register("./serviceWorker.js", { scope: "./" })
     .then((registration) => {
       console.log("registrasi service worker berhasil", registration);
       return registration;
