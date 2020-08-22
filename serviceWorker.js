@@ -12,15 +12,29 @@ const urlsToCache = [
   { url: "assets/images/icons/favicon-16x16.png", revision: "1" },
   { url: "assets/images/icons/favicon-32x32.png", revision: "1" },
   { url: "assets/images/icons/favicon-96x96.png", revision: "1" },
-  { url: "assets/images/icons/favicon-144x144.png", revision: "1" },
-  // { url: "assets/images/icons/icon-72x72.png", revision: "1" },
-  // { url: "assets/images/icons/icon-96x96.png", revision: "1" },
-  // { url: "assets/images/icons/icon-128x128.png", revision: "1" },
-  // { url: "assets/images/icons/icon-144x144.png", revision: "1" },
-  // { url: "assets/images/icons/icon-152x152.png", revision: "1" },
-  // { url: "assets/images/icons/icon-192x192.png", revision: "1" },
-  // { url: "assets/images/icons/icon-384x384.png", revision: "1" },
-  // { url: "assets/images/icons/icon-512x512.png", revision: "1" },
+  { url: "assets/images/icons/icon-144x144.png", revision: "1" },
+  { url: "assets/images/icons/android-icon-36x36.png", revision: "1" },
+  { url: "assets/images/icons/android-icon-48x48.png", revision: "1" },
+  { url: "assets/images/icons/android-icon-72x72.png", revision: "1" },
+  { url: "assets/images/icons/android-icon-96x96.png", revision: "1" },
+  { url: "assets/images/icons/android-icon-144x144.png", revision: "1" },
+  { url: "assets/images/icons/android-icon-192x192.png", revision: "1" },
+  { url: "assets/images/icons/apple-icon.png", revision: "1" },
+  { url: "assets/images/icons/apple-icon-57x57.png", revision: "1" },
+  { url: "assets/images/icons/apple-icon-60x60.png", revision: "1" },
+  { url: "assets/images/icons/apple-icon-72x72.png", revision: "1" },
+  { url: "assets/images/icons/apple-icon-76x76.png", revision: "1" },
+  { url: "assets/images/icons/apple-icon-114x114.png", revision: "1" },
+  { url: "assets/images/icons/apple-icon-120x120.png", revision: "1" },
+  { url: "assets/images/icons/apple-icon-144x144.png", revision: "1" },
+  { url: "assets/images/icons/apple-icon-152x152.png", revision: "1" },
+  { url: "assets/images/icons/apple-icon-180x180.png", revision: "1" },
+  { url: "assets/images/icons/apple-icon-precomposed.png", revision: "1" },
+  { url: "assets/images/icons/ms-icon-70x70.png", revision: "1" },
+  { url: "assets/images/icons/ms-icon-144x144.png", revision: "1" },
+  { url: "assets/images/icons/ms-icon-150x150.png", revision: "1" },
+  { url: "assets/images/icons/ms-icon-310x310.png", revision: "1" },
+  { url: "assets/images/icons/favicon.ico", revision: "1" },
   { url: "/assets/css/customizeStyle.css", revision: "1" },
   { url: "/assets/css/materialize-icon.css", revision: "1" },
   { url: "/assets/css/materialize.min.css", revision: "1" },
@@ -56,28 +70,28 @@ if (workbox) {
 
   // Canche javascript dan css
 
-  workbox.routing.registerRoute(
-    new RegExp("/assets/images/icons"),
-    workbox.strategies.staleWhileRevalidate({
-      cacheName: "images",
-    })
-  );
-  // cache semua file image
   // workbox.routing.registerRoute(
-  //   /.*(?:png|gif|jpg|jpeg|svg|ico)$/,
-  //   workbox.strategies.cacheFirst({
+  //   new RegExp("/assets/images/icons"),
+  //   workbox.strategies.staleWhileRevalidate({
   //     cacheName: "images",
-  //     plugins: [
-  //       new workbox.cacheableResponse.Plugin({
-  //         statuses: [0, 200],
-  //       }),
-  //       new workbox.expiration.Plugin({
-  //         maxEntries: 100,
-  //         maxAgeSeconds: 30 * 24 * 60 * 60,
-  //       }),
-  //     ],
   //   })
   // );
+  // cache semua file image
+  workbox.routing.registerRoute(
+    /\.(?:png|gif|jpg|jpeg|svg)$/,
+    workbox.strategies.cacheFirst({
+      cacheName: "images",
+      plugins: [
+        new workbox.cacheableResponse.Plugin({
+          statuses: [0, 200],
+        }),
+        new workbox.expiration.Plugin({
+          maxEntries: 100,
+          maxAgeSeconds: 30 * 24 * 60 * 60,
+        }),
+      ],
+    })
+  );
 
   workbox.routing.registerRoute(
     new RegExp("https://api.football-data.org/"),

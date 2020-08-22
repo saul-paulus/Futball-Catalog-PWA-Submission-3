@@ -49,13 +49,6 @@ const erResult = (error) => console.log(error);
 
 // Mendapatkan data klasmen
 const getStands = () => {
-  if ("caches" in window) {
-    caches.match(urlRequestStands).then((response) => {
-      if (response) {
-        response.json().then(cardsGetStands);
-      }
-    });
-  }
   fetch(urlRequestStands)
     .then(statusResult)
     .then(jsonResult)
@@ -68,30 +61,6 @@ const getDetailsTeams = () => {
   return new Promise((resolve, reject) => {
     var urlParams = new URLSearchParams(window.location.search);
     var idParam = urlParams.get("id");
-
-    if ("caches" in window) {
-      caches
-        .match(base_url + "teams/" + idParam, {
-          headers: { "X-Auth-Token": API_KEY },
-        })
-        .then((response) => {
-          if (response) {
-            response.json().then((details) => {
-              console.log(details);
-
-              document.getElementById(
-                "body-content"
-              ).innerHTML = cardsDetailTeam(details);
-              loadingHide();
-              showSave();
-              resolve(details);
-            });
-          }
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    }
 
     fetch(base_url + "teams/" + idParam, {
       headers: {
@@ -115,13 +84,6 @@ const getDetailsTeams = () => {
 
 // Mendapatkan jadwal pertandingan
 const getMatch = () => {
-  if ("caches" in window) {
-    caches.match(urlRequesMatch).then((response) => {
-      if (response) {
-        response.json().then(cardsGetMatch);
-      }
-    });
-  }
   fetch(urlRequesMatch).then(statusResult).then(jsonResult).then(cardsGetMatch);
 };
 
