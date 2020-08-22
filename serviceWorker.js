@@ -109,15 +109,15 @@ if (workbox) {
 
   // Kode untuk event push agar service worker dapat menerima push notification.
   self.addEventListener("push", (event) => {
-    var body;
+    let body;
     if (event.data) {
       body = event.data.text();
     } else {
       body = "Push message no payload";
     }
-    var options = {
+    let options = {
       body: body,
-      icon: "assets/images/icons/icon-128x128.png",
+      icon: "./assets/images/icons/ms-icon-70x70.png",
       vibrate: [100, 50, 100],
       data: {
         dateOfArrival: Date.now(),
@@ -126,16 +126,17 @@ if (workbox) {
     };
 
     event.waitUntil(
-      clients.matchAll().then((c) => {
-        console.log(c);
-        if (c.length === 0) {
-          // Show notification
-          self.registration.showNotification("Push Notification", options);
-        } else {
-          // Send a message to the page to update the UI
-          console.log("Application is already open!");
-        }
-      })
+      self.registration.showNotification("Push Notification", options)
+      // clients.matchAll().then((c) => {
+      //   console.log(c);
+      //   if (c.length === 0) {
+      //     // Show notification
+      //     self.registration.showNotification("Push Notification", options);
+      //   } else {
+      //     // Send a message to the page to update the UI
+      //     console.log("Application is already open!");
+      //   }
+      // })
     );
   });
 } else {
