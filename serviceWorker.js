@@ -8,8 +8,11 @@ const urlsToCache = [
   { url: "/pages/favTeam.html", revision: "1" },
   { url: "/pages/home.html", revision: "1" },
   { url: "/pages/match.html", revision: "1" },
-  // { url: "assets/images/logo/brandPL.png", revision: "1" },
-  // { url: "assets/images/icons/favicon.ico", revision: "1" },
+  { url: "assets/images/logo/brandPL.png", revision: "1" },
+  { url: "assets/images/icons/favicon-16x16.png", revision: "1" },
+  { url: "assets/images/icons/favicon-32x32.png", revision: "1" },
+  { url: "assets/images/icons/favicon-96x96.png", revision: "1" },
+  { url: "assets/images/icons/favicon-144x144.png", revision: "1" },
   // { url: "assets/images/icons/icon-72x72.png", revision: "1" },
   // { url: "assets/images/icons/icon-96x96.png", revision: "1" },
   // { url: "assets/images/icons/icon-128x128.png", revision: "1" },
@@ -18,9 +21,9 @@ const urlsToCache = [
   // { url: "assets/images/icons/icon-192x192.png", revision: "1" },
   // { url: "assets/images/icons/icon-384x384.png", revision: "1" },
   // { url: "assets/images/icons/icon-512x512.png", revision: "1" },
-  // { url: "/assets/css/customizeStyle.css", revision: "1" },
-  // { url: "/assets/css/materialize-icon.css", revision: "1" },
-  // { url: "/assets/css/materialize.min.css", revision: "1" },
+  { url: "/assets/css/customizeStyle.css", revision: "1" },
+  { url: "/assets/css/materialize-icon.css", revision: "1" },
+  { url: "/assets/css/materialize.min.css", revision: "1" },
   { url: "/assets/js/materialize.min.js", revision: "1" },
   { url: "/assets/js/footballAPI.js", revision: "1" },
   { url: "/assets/js/register.js", revision: "1" },
@@ -40,7 +43,9 @@ importScripts(
 if (workbox) {
   console.log(`workbox berhasil dimuat 🎉`);
 
-  workbox.precaching.precacheAndRoute(urlsToCache);
+  workbox.precaching.precacheAndRoute(urlsToCache, {
+    ignoreUrlParametersMatching: [/.*/],
+  });
 
   workbox.routing.registerRoute(
     new RegExp("/"),
@@ -51,40 +56,28 @@ if (workbox) {
 
   // Canche javascript dan css
 
-  // workbox.routing.registerRoute(({ request }) => {
-  //   request.destination === "script" || request.destination === "style",
-  //     new staleWhileRevalidate();
-  // });
-
   workbox.routing.registerRoute(
-    new RegExp("/style/"),
-    workbox.strategies.cacheFirst({
-      cacheName: "style",
-    })
-  );
-
-  workbox.routing.registerRoute(
-    new RegExp("/assets/images/"),
+    new RegExp("/assets/images/icons"),
     workbox.strategies.staleWhileRevalidate({
       cacheName: "images",
     })
   );
   // cache semua file image
-  workbox.routing.registerRoute(
-    /.*(?:png|gif|jpg|jpeg|svg|ico)$/,
-    workbox.strategies.cacheFirst({
-      cacheName: "images",
-      plugins: [
-        new workbox.cacheableResponse.Plugin({
-          statuses: [0, 200],
-        }),
-        new workbox.expiration.Plugin({
-          maxEntries: 100,
-          maxAgeSeconds: 30 * 24 * 60 * 60,
-        }),
-      ],
-    })
-  );
+  // workbox.routing.registerRoute(
+  //   /.*(?:png|gif|jpg|jpeg|svg|ico)$/,
+  //   workbox.strategies.cacheFirst({
+  //     cacheName: "images",
+  //     plugins: [
+  //       new workbox.cacheableResponse.Plugin({
+  //         statuses: [0, 200],
+  //       }),
+  //       new workbox.expiration.Plugin({
+  //         maxEntries: 100,
+  //         maxAgeSeconds: 30 * 24 * 60 * 60,
+  //       }),
+  //     ],
+  //   })
+  // );
 
   workbox.routing.registerRoute(
     new RegExp("https://api.football-data.org/"),
