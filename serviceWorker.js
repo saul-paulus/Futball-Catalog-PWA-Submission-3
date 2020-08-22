@@ -63,6 +63,12 @@ if (workbox) {
     })
   );
 
+  workbox.routing.registerRoute(
+    new RegExp("/assets/images/"),
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: "images",
+    })
+  );
   // cache semua file image
   workbox.routing.registerRoute(
     /.*(?:png|gif|jpg|jpeg|svg|ico)$/,
