@@ -18,9 +18,9 @@ const urlsToCache = [
   // { url: "assets/images/icons/icon-192x192.png", revision: "1" },
   // { url: "assets/images/icons/icon-384x384.png", revision: "1" },
   // { url: "assets/images/icons/icon-512x512.png", revision: "1" },
-  { url: "/assets/css/customizeStyle.css", revision: "1" },
-  { url: "/assets/css/materialize-icon.css", revision: "1" },
-  { url: "/assets/css/materialize.min.css", revision: "1" },
+  // { url: "/assets/css/customizeStyle.css", revision: "1" },
+  // { url: "/assets/css/materialize-icon.css", revision: "1" },
+  // { url: "/assets/css/materialize.min.css", revision: "1" },
   { url: "/assets/js/materialize.min.js", revision: "1" },
   { url: "/assets/js/footballAPI.js", revision: "1" },
   { url: "/assets/js/register.js", revision: "1" },
@@ -49,10 +49,25 @@ if (workbox) {
     })
   );
 
+  // Canche javascript dan css
+
+  // workbox.routing.registerRoute(({ request }) => {
+  //   request.destination === "script" || request.destination === "style",
+  //     new staleWhileRevalidate();
+  // });
+
+  workbox.routing.registerRoute(
+    new RegExp("/style/"),
+    workbox.strategies.cacheFirst({
+      cacheName: "style",
+    })
+  );
+
+  // cache semua file image
   workbox.routing.registerRoute(
     /.*(?:png|gif|jpg|jpeg|svg|ico)$/,
     workbox.strategies.cacheFirst({
-      cacheName: "PL_PWA",
+      cacheName: "images",
       plugins: [
         new workbox.cacheableResponse.Plugin({
           statuses: [0, 200],
