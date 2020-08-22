@@ -68,14 +68,6 @@ if (workbox) {
     })
   );
 
-  // Canche javascript dan css
-
-  // workbox.routing.registerRoute(
-  //   new RegExp("/assets/images/icons"),
-  //   workbox.strategies.staleWhileRevalidate({
-  //     cacheName: "images",
-  //   })
-  // );
   // cache semua file image
   workbox.routing.registerRoute(
     /\.(?:png|gif|jpg|jpeg|svg)$/,
@@ -97,38 +89,38 @@ if (workbox) {
     new RegExp("https://api.football-data.org/"),
     workbox.strategies.staleWhileRevalidate()
   );
+
+  // Kode untuk event push agar service worker dapat menerima push notification.
+  self.addEventListener("push", (event) => {
+    var body;
+    if (event.data) {
+      body = event.data.text();
+    } else {
+      body = "Push message no payload";
+    }
+    var options = {
+      body: body,
+      icon: "assets/images/icons/icon-128x128.png",
+      vibrate: [100, 50, 100],
+      data: {
+        dateOfArrival: Date.now(),
+        primaryKey: 1,
+      },
+    };
+
+    event.waitUntil(
+      clients.matchAll().then((c) => {
+        console.log(c);
+        if (c.length === 0) {
+          // Show notification
+          self.registration.showNotification("Push Notification", options);
+        } else {
+          // Send a message to the page to update the UI
+          console.log("Application is already open!");
+        }
+      })
+    );
+  });
 } else {
   console.log(`workbox gagal dimuat 😬`);
 }
-
-// Kode untuk event push agar service worker dapat menerima push notification.
-self.addEventListener("push", (event) => {
-  var body;
-  if (event.data) {
-    body = event.data.text();
-  } else {
-    body = "Push message no payload";
-  }
-  var options = {
-    body: body,
-    icon: "assets/images/icons/icon-128x128.png",
-    vibrate: [100, 50, 100],
-    data: {
-      dateOfArrival: Date.now(),
-      primaryKey: 1,
-    },
-  };
-
-  event.waitUntil(
-    clients.matchAll().then((c) => {
-      console.log(c);
-      if (c.length === 0) {
-        // Show notification
-        self.registration.showNotification("Push Notification", options);
-      } else {
-        // Send a message to the page to update the UI
-        console.log("Application is already open!");
-      }
-    })
-  );
-});
