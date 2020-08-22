@@ -5,9 +5,6 @@ const urlsToCache = [
   { url: "/detailsTeam.html", revision: "1" },
   { url: "/manifest.json", revision: "1" },
   { url: "/push.js", revision: "1" },
-  { url: "/pages/favTeam.html", revision: "1" },
-  { url: "/pages/home.html", revision: "1" },
-  { url: "/pages/match.html", revision: "1" },
   { url: "assets/images/logo/brandPL.png", revision: "1" },
   { url: "assets/images/icons/favicon-16x16.png", revision: "1" },
   { url: "assets/images/icons/favicon-32x32.png", revision: "1" },
@@ -75,7 +72,7 @@ if (workbox) {
       cacheName: "images",
       plugins: [
         new workbox.cacheableResponse.Plugin({
-          statuses: [0, 200],
+          statuses: [200],
         }),
         new workbox.expiration.Plugin({
           maxEntries: 100,
@@ -87,7 +84,27 @@ if (workbox) {
 
   workbox.routing.registerRoute(
     new RegExp("https://api.football-data.org/"),
-    workbox.strategies.staleWhileRevalidate()
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: "footballApi",
+      plugins: [
+        new workbox.cacheableResponse.Plugin({
+          statuses: [200],
+        }),
+      ],
+    })
+  );
+
+  workbox.routing.registerRoute(
+    /\.(?:js|css)$/,
+    new workbox.strategies.StaleWhileRevalidate({
+      cacheName: "resource-css-Js",
+    })
+  );
+  workbox.routing.registerRoute(
+    new RegExp("/pages/"),
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: "pages",
+    })
   );
 
   // Kode untuk event push agar service worker dapat menerima push notification.
