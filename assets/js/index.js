@@ -7,6 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Service worker tidak didukung browser ini.");
   } else {
     registerServiceWorker();
-    // requestPermission();
+    requestPermission();
   }
 });

@@ -126,17 +126,16 @@ if (workbox) {
     };
 
     event.waitUntil(
-      self.registration.showNotification("Push Notification", options)
-      // clients.matchAll().then((c) => {
-      //   console.log(c);
-      //   if (c.length === 0) {
-      //     // Show notification
-      //     self.registration.showNotification("Push Notification", options);
-      //   } else {
-      //     // Send a message to the page to update the UI
-      //     console.log("Application is already open!");
-      //   }
-      // })
+      clients.matchAll().then((c) => {
+        console.log(c);
+        if (c.length === 0) {
+          // Show notification
+          self.registration.showNotification("Push Notification", options);
+        } else {
+          // Send a message to the page to update the UI
+          console.log("Application is already open!");
+        }
+      })
     );
   });
 } else {
