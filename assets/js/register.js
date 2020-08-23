@@ -9,8 +9,6 @@ const requestPermission = () => {
         console.error("Pengguna menutup kotak dialog permintaan ijin.");
         return;
       }
-      console.log("Fitur notifikasi diijinkan.");
-
       const urlBase64ToUint8Array = (base64String) => {
         const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
         const base64 = (base64String + padding)
@@ -27,8 +25,9 @@ const requestPermission = () => {
       const convertedVapidKey = urlBase64ToUint8Array(
         "BJzIeU1g86G5TfWYzlyDABXpZDTAnbS74qgIuGpqHe8uX1IZz6KVLDziKtqR6ppCwJpMd9_FnKeM4x21brlSvfE"
       );
+
       if ("PushManager" in window) {
-        navigator.serviceWorker.ready.then((registration) => {
+        navigator.serviceWorker.getRegistration().then((registration) => {
           registration.pushManager
             .subscribe({
               userVisibleOnly: true,
