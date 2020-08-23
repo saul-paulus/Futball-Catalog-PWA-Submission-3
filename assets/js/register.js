@@ -27,7 +27,7 @@ const requestPermission = () => {
       );
 
       if ("PushManager" in window) {
-        navigator.serviceWorker.getRegistration().then((registration) => {
+        navigator.serviceWorker.ready.then((registration) => {
           registration.pushManager
             .subscribe({
               userVisibleOnly: true,
