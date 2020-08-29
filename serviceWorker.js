@@ -4,7 +4,6 @@ const urlsToCache = [
   { url: "/index.html", revision: "1" },
   { url: "/detailsTeam.html", revision: "1" },
   { url: "/manifest.json", revision: "1" },
-  { url: "/push.js", revision: "1" },
   { url: "assets/images/logo/brandPL.png", revision: "1" },
   { url: "assets/images/icons/favicon-16x16.png", revision: "1" },
   { url: "assets/images/icons/favicon-32x32.png", revision: "1" },
