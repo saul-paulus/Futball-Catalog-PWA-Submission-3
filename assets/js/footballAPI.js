@@ -12,19 +12,13 @@ const id_tim = 2021;
 const stands_url = `${base_url}competitions/${id_tim}/standings`; //!Klasmen liga inggirs
 const match_url = `${base_url}competitions/${id_tim}/matches`; //!jadwal pertandingan
 
-// ? get url Api klasmen liga inggris
-const urlRequestStands = new Request(stands_url, {
-  headers: {
-    "X-Auth-Token": API_KEY,
-  },
-});
-
-// ? get url Api Jadwal pertandingan liga inggris
-const urlRequesMatch = new Request(match_url, {
-  headers: {
-    "X-Auth-Token": API_KEY,
-  },
-});
+const urlRequest = (url) => {
+  return new Request(url, {
+    headers: {
+      "X-Auth-Token": API_KEY,
+    },
+  });
+};
 
 // ? mengecek status API jika fetch dipanggil
 const statusResult = (response) => {
@@ -49,7 +43,7 @@ const erResult = (error) => console.log(error);
 
 // Mendapatkan data klasmen
 const getStands = () => {
-  fetch(urlRequestStands)
+  fetch(urlRequest(stands_url))
     .then(statusResult)
     .then(jsonResult)
     .then(cardsGetStands)
@@ -62,7 +56,7 @@ const getDetailsTeams = () => {
     var urlParams = new URLSearchParams(window.location.search);
     var idParam = urlParams.get("id");
 
-    fetch(base_url + "teams/" + idParam, {
+    fetch(`${base_url}teams/${idParam}`, {
       headers: {
         "X-Auth-Token": API_KEY,
       },
@@ -84,7 +78,10 @@ const getDetailsTeams = () => {
 
 // Mendapatkan jadwal pertandingan
 const getMatch = () => {
-  fetch(urlRequesMatch).then(statusResult).then(jsonResult).then(cardsGetMatch);
+  fetch(urlRequest(match_url))
+    .then(statusResult)
+    .then(jsonResult)
+    .then(cardsGetMatch);
 };
 
 // preloader hide
